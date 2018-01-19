@@ -38,17 +38,40 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 (use-package clojure-mode)
+
+(use-package auto-complete)
+(require 'auto-complete-config)
+(ac-config-default)
+
+(use-package projectile)
+
 (use-package cider)
+
+(use-package ac-cider)
+(require 'ac-cider)
+(add-hook 'cider-mode-hook 'ac-flyspell-workaround)
+(add-hook 'cider-mode-hook 'ac-cider-setup)
+(add-hook 'cider-repl-mode-hook 'ac-cider-setup)
+(eval-after-load "auto-complete"
+  '(progn
+     (add-to-list 'ac-modes 'cider-mode)
+     (add-to-list 'ac-modes 'cider-repl-mode)))
+
 (use-package better-defaults)
+
 (use-package doom-themes)
+
 (use-package nlinum)
 (require 'nlinum)
 (setq linum-format "%d")
 (global-linum-mode 1)
+
 (use-package paredit)
 (add-hook 'clojure-mode-hook #'paredit-mode)
+
 (use-package rainbow-delimiters)
 (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+
 (use-package undo-tree
   :diminish undo-tree-mode
   :config
@@ -56,6 +79,10 @@
     (global-undo-tree-mode)
     (setq undo-tree-visualizer-timestamps t) 
     (setq undo-tree-visualizer-diff t)))
+
+(use-package neotree)
+(require 'neotree)
+(global-set-key [f3] 'neotree-toggle)
 
 (use-package windmove
   :bind
@@ -68,6 +95,48 @@
 (prefer-coding-system 'utf-8)
 (when (display-graphic-p)
   (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+
+
+(defvar my/refile-map (make-sparse-keymap))
+
+(defmacro my/defshortcut (key file)
+  `(progn
+     (set-register ,key (cons 'file ,file))
+     (define-key my/refile-map
+       (char-to-string ,key)
+       (lambda (prefix)
+         (interactive "p")
+         (let ((org-refile-targets '(((,file) :maxlevel . 6)))
+               (current-prefix-arg (or current-prefix-arg '(4))))
+           (call-interactively 'org-refile))))))
+
+
+  (define-key my/refile-map "," 'my/org-refile-to-previous-in-file)
+
+(my/defshortcut ?i "~/.emacs.d/init.el")
+(my/defshortcut ?o "~/personal/organizer.org")
+(my/defshortcut ?s "~/personal/sewing.org")
+(my/defshortcut ?b "~/personal/business.org")
+(my/defshortcut ?p "~/personal/google-inbox.org")
+(my/defshortcut ?P "~/personal/google-ideas.org")
+(my/defshortcut ?B "~/Dropbox/books")
+(my/defshortcut ?e "~/code/emacs-notes/tasks.org")
+(my/defshortcut ?w "~/Dropbox/public/sharing/index.org")
+(my/defshortcut ?W "~/Dropbox/public/sharing/blog.org")
+(my/defshortcut ?j "~/personal/journal.org")
+(my/defshortcut ?I "~/Dropbox/Inbox")
+(my/defshortcut ?g "~/sachac.github.io/evil-plans/index.org")
+(my/defshortcut ?c "~/code/dev/elisp-course.org")
+(my/defshortcut ?C "~/personal/calendar.org")
+(my/defshortcut ?l "~/dropbox/public/sharing/learning.org")
+(my/defshortcut ?q "~/personal/questions.org")
+
+
+(require 'bs)
+(setq bs-configurations
+      '(("files" "^\\*scratch\\*" nil nil bs-visits-non-file bs-sort-buffer-interns-are-last)))
+
+(global-set-key (kbd "<f2>") 'bs-show)
 
 
 (custom-set-variables
@@ -90,7 +159,7 @@
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (guide-key undo-tree smart-mode-line smartparens nlinum doom-themes better-defaults cider clojure-mode auto-compile use-package)))
+    (sr-speedbar smartscan guide-key undo-tree smart-mode-line smartparens nlinum doom-themes better-defaults cider clojure-mode auto-compile use-package)))
  '(vc-annotate-background "#f0f0f0")
  '(vc-annotate-color-map
    (list
