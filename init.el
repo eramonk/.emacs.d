@@ -45,56 +45,9 @@
 
 (use-package projectile)
 
-(use-package cider
-  :config
-   (eval-after-load 'clojure-mode
-  '(progn
-     (define-key clojure-mode-map (kbd "C-r j") #'cider-jack-in)
-     (define-key clojure-mode-map (kbd "C-r M-J") #'cider-jack-in-clojurescript)
-     (define-key clojure-mode-map (kbd "C-r M-c") #'cider-connect)))
-   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "C-r C-d") 'cider-doc-map)
-    (define-key map (kbd "C-r ,")   'cider-test-commands-map)
-    (define-key map (kbd "C-r C-t") 'cider-test-commands-map)
-    (define-key map (kbd "M-.") #'cider-find-var)
-    (define-key map (kbd "C-r C-.") #'cider-find-ns)
-    (define-key map (kbd "C-r C-:") #'cider-find-keyword)
-    (define-key map (kbd "M-,") #'cider-pop-back)
-    (define-key map (kbd "C-r M-.") #'cider-find-resource)
-    (define-key map (kbd "RET") #'cider-repl-return)
-    (define-key map (kbd "TAB") #'cider-repl-tab)
-    (define-key map (kbd "C-<return>") #'cider-repl-closing-return)
-    (define-key map (kbd "C-j") #'cider-repl-newline-and-indent)
-    (define-key map (kbd "C-r C-o") #'cider-repl-clear-output)
-    (define-key map (kbd "C-r M-n") #'cider-repl-set-ns)
-    (define-key map (kbd "C-r C-u") #'cider-repl-kill-input)
-    (define-key map (kbd "C-S-a") #'cider-repl-bol-mark)
-    (define-key map [S-home] #'cider-repl-bol-mark)
-    (define-key map (kbd "C-<up>") #'cider-repl-backward-input)
-    (define-key map (kbd "C-<down>") #'cider-repl-forward-input)
-    (define-key map (kbd "M-p") #'cider-repl-previous-input)
-    (define-key map (kbd "M-n") #'cider-repl-next-input)
-    (define-key map (kbd "M-r") #'cider-repl-previous-matching-input)
-    (define-key map (kbd "M-s") #'cider-repl-next-matching-input)
-    (define-key map (kbd "C-r C-n") #'cider-repl-next-prompt)
-    (define-key map (kbd "C-r C-p") #'cider-repl-previous-prompt)
-    (define-key map (kbd "C-r C-b") #'cider-interrupt)
-    (define-key map (kbd "C-r C-c") #'cider-interrupt)
-    (define-key map (kbd "C-r C-m") #'cider-macroexpand-1)
-    (define-key map (kbd "C-r M-m") #'cider-macroexpand-all)
-    (define-key map (kbd "C-r C-z") #'cider-switch-to-last-clojure-buffer)
-    (define-key map (kbd "C-r M-o") #'cider-repl-switch-to-other)
-    (define-key map (kbd "C-r M-s") #'cider-selector)
-    (define-key map (kbd "C-r M-d") #'cider-display-connection-info)
-    (define-key map (kbd "C-r C-q") #'cider-quit)
-    (define-key map (kbd "C-r M-i") #'cider-inspect)
-    (define-key map (kbd "C-r M-p") #'cider-repl-history)
-    (define-key map (kbd "C-r M-t v") #'cider-toggle-trace-var)
-    (define-key map (kbd "C-r M-t n") #'cider-toggle-trace-ns)
-    (define-key map (kbd "C-r C-x") #'cider-refresh)
-    (define-key map (kbd "C-x C-e") #'cider-eval-last-sexp)
-    (define-key map (kbd "C-r C-r") #'cider-eval-region)
-    ))
+(use-package idea-darkula-theme)
+(push (substitute-in-file-name "~/.emacs.d/idea-darkula-theme/") custom-theme-load-path)
+(load-theme 'idea-darkula t)
 
 (use-package ac-cider)
 (require 'ac-cider)
@@ -108,8 +61,17 @@
 
 (use-package better-defaults)
 
-(use-package doom-themes)
-(use-package solarized-theme)
+;;(use-package doom-themes)
+;;(use-package solarized-theme)
+
+(use-package cider
+  :config
+   (eval-after-load 'clojure-mode
+  '(progn
+     (define-key clojure-mode-map (kbd "C-c j") #'cider-jack-in)
+     (define-key clojure-mode-map (kbd "C-c M-J") #'cider-jack-in-clojurescript)
+     (define-key clojure-mode-map (kbd "C-c M-c") #'cider-connect))))
+
 
 (use-package nlinum)
 (require 'nlinum)
@@ -198,13 +160,15 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
+ '(cua-mode t nil (cua-base))
  '(cua-normal-cursor-color "#839496")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
- '(custom-enabled-themes (quote (doom-spacegrey)))
+ '(custom-enabled-themes (quote (idea-darkula)))
  '(custom-safe-themes
    (quote
-    ("a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "77bddca0879cb3b0ecdf071d9635c818827c57d69164291cb27268ae324efa84" "3481e594ae6866d72c40ad77d86a1ffa338d01daa9eb0977e324f365cef4f47c" "6be42070d23e832a7493166f90e9bb08af348a818ec18389c1f21d33542771af" "554b7f0439155d6eb648d4837ef03902f51124cacee021217e76f39e9dd314c2" "0a3a41085c19d8121ed0ad3eb658a475ccb948a70a83604641ee7d4c3575a4d5" "73e35ffa5ca98b57a9923954f296c3854ce6d8736b31fdbdda3d27502d4b4d69" "2e1d19424153d41462ad31144549efa41f55dacda9b76571f73904612b15fd0a" "a7e7804313dbf827a441c86a8109ef5b64b03011383322cbdbf646eb02692f76" "d0404bd38534a00ee72a4f887a987d6bff87f4cf8d8f85149e32849b262465a5" default)))
+    ("82b67c7e21c3b12be7b569af7c84ec0fb2d62105629a173e2479e1053cff94bd" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "77bddca0879cb3b0ecdf071d9635c818827c57d69164291cb27268ae324efa84" "3481e594ae6866d72c40ad77d86a1ffa338d01daa9eb0977e324f365cef4f47c" "6be42070d23e832a7493166f90e9bb08af348a818ec18389c1f21d33542771af" "554b7f0439155d6eb648d4837ef03902f51124cacee021217e76f39e9dd314c2" "0a3a41085c19d8121ed0ad3eb658a475ccb948a70a83604641ee7d4c3575a4d5" "73e35ffa5ca98b57a9923954f296c3854ce6d8736b31fdbdda3d27502d4b4d69" "2e1d19424153d41462ad31144549efa41f55dacda9b76571f73904612b15fd0a" "a7e7804313dbf827a441c86a8109ef5b64b03011383322cbdbf646eb02692f76" "d0404bd38534a00ee72a4f887a987d6bff87f4cf8d8f85149e32849b262465a5" default)))
+ '(display-time-mode t)
  '(fci-rule-color "#383a42")
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
@@ -233,6 +197,7 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#f0f0f0" "#50a14f"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#f0f0f0" "#9ca0a4"))
  '(magit-diff-use-overlays nil)
+ '(menu-bar-mode nil)
  '(nrepl-message-colors
    (quote
     ("#dc322f" "#cb4b16" "#b58900" "#546E00" "#B4C342" "#00629D" "#2aa198" "#d33682" "#6c71c4")))
@@ -244,9 +209,11 @@
     (solarized-theme sr-speedbar smartscan guide-key undo-tree smart-mode-line smartparens nlinum doom-themes better-defaults cider clojure-mode auto-compile use-package)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
+ '(show-paren-mode t)
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#073642" 0.2))
  '(term-default-bg-color "#002b36")
  '(term-default-fg-color "#839496")
+ '(tool-bar-mode nil)
  '(vc-annotate-background "#f0f0f0")
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
@@ -282,4 +249,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(default ((t (:family "Input Mono" :foundry "FBI " :slant normal :weight normal :height 120 :width normal))))
+ '(rainbow-delimiters-base-face ((t (:inherit nil))))
+ '(rainbow-delimiters-depth-1-face ((t (:inherit rainbow-delimiters-base-face :foreground "light gray"))))
+ '(rainbow-delimiters-depth-2-face ((t (:inherit rainbow-delimiters-base-face :foreground "goldenrod"))))
+ '(rainbow-delimiters-depth-3-face ((t (:inherit rainbow-delimiters-base-face :foreground "yellow green"))))
+ '(rainbow-delimiters-depth-4-face ((t (:inherit rainbow-delimiters-base-face :foreground "coral"))))
+ '(rainbow-delimiters-depth-5-face ((t (:inherit rainbow-delimiters-base-face :foreground "medium purple"))))
+ '(rainbow-delimiters-depth-6-face ((t (:inherit rainbow-delimiters-base-face :foreground "violet"))))
+ '(rainbow-delimiters-depth-7-face ((t (:inherit rainbow-delimiters-base-face :foreground "tan1"))))
+ '(rainbow-delimiters-depth-8-face ((t (:inherit rainbow-delimiters-base-face :foreground "wheat"))))
+ '(rainbow-delimiters-depth-9-face ((t (:inherit rainbow-delimiters-base-face :foreground "RoyalBlue1")))))
