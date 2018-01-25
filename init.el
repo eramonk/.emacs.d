@@ -1,9 +1,16 @@
+(setq url-proxy-services
+   '(("no_proxy" . "^\\(localhost\\|10.*\\)")
+     ("http" . "10.199.28.14:3128")
+     ("https" . "10.199.28.14:3128")))
+
 (package-initialize)
 
 (unless (assoc-default "melpa" package-archives)
   (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
 (unless (assoc-default "org" package-archives)
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t))
+
+(package-initialize)
 
 ;;(package-refresh-contents)
 
