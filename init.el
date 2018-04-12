@@ -17,6 +17,16 @@
   :config (auto-compile-on-load-mode))
 (setq load-prefer-newer t)
 
+(defun toggle-fullscreen ()
+  "Toggle full screen on X11"
+  (interactive)
+  (when (eq window-system 'x)
+    (set-frame-parameter
+     nil 'fullscreen
+     (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
+
+(global-set-key [f11] 'toggle-fullscreen)
+
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
 (setq delete-old-versions -1)
@@ -286,7 +296,7 @@ middle"
  '(org-fontify-whole-heading-line t)
  '(package-selected-packages
    (quote
-    (4clojure solarized-theme sr-speedbar smartscan guide-key undo-tree smart-mode-line smartparens nlinum doom-themes better-defaults cider clojure-mode auto-compile use-package)))
+    (## 4clojure solarized-theme sr-speedbar smartscan guide-key undo-tree smart-mode-line smartparens nlinum doom-themes better-defaults cider clojure-mode auto-compile use-package)))
  '(pos-tip-background-color "#073642")
  '(pos-tip-foreground-color "#93a1a1")
  '(show-paren-mode t)
