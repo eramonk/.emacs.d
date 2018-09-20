@@ -26,6 +26,15 @@
      (when (not (frame-parameter nil 'fullscreen)) 'fullboth))))
 
 (global-set-key [f11] 'toggle-fullscreen)
+;;подсветка строки с курсором
+(global-hl-line-mode 1)
+;;
+(iswitchb-mode 1)
+;;переключение буферов
+;;(global-set-key [?\C-,] 'previous-buffer)
+;;(global-set-key [?\C-.] 'next-buffer)
+;;сохранение сессии
+(desktop-save-mode 1)
 
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
