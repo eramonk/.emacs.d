@@ -5,7 +5,8 @@
 (unless (assoc-default "org" package-archives)
   (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t))
 
-;;(package-refresh-contents)
+; раскоментировать при первом запуске
+; (package-refresh-contents)
 
 ;;(add-to-list 'load-path "~/elisp")
 (unless (package-installed-p 'use-package)
